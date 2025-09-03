@@ -1,0 +1,18 @@
+html, body {
+  .controls {
+display: inline-flex;
+gap: 12px;
+align-items: center;
+background: rgba(255,255,255,0.75);
+padding: 8px 12px;
+border-radius: 8px;
+backdrop-filter: blur(4px);
+margin: 8px auto 20px; /* spacing above & below controls */
+}
+  margin: 0;
+  padding: 0;
+}
+canvas {
+
+  display: block;
+}
