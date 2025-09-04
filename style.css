@@ -1,0 +1,20 @@
+html, body {
+  .controls {
+display: inline-flex;
+gap: 12px;
+align-items: center;
+background:(transparent);
+padding: 8px 12px;
+border-radius: 8px;
+backdrop-filter: blur(4px);
+margin: 8px auto 20px;
+flex-wrap: wrap;
+}
+  margin: 0;
+  padding: 0;
+}
+canvas {
+  display: block;
+  border: none;     
+  outline: none;
+}
