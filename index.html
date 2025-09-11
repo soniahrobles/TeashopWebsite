@@ -29,11 +29,17 @@
       </label>
     </div>
 
-    <!-- Lock gestures on mobile -->
+    <!-- Lock gestures on mobile, but don't block controls -->
     <script>
-      /* Lock the page from moving/zooming on mobile */
-      // Prevent touch panning/scrolling
+      // Helper: event started inside the controls bar?
+      function inControls(e) {
+        const t = e.target;
+        return t && typeof t.closest === 'function' && t.closest('.controls');
+      }
+
+      // Prevent page panning/scrolling (except over controls)
       document.addEventListener('touchmove', (e) => {
+        if (inControls(e)) return;   // let slider & button work
         e.preventDefault();
       }, { passive: false });
 
@@ -42,9 +48,10 @@
       document.addEventListener('gesturechange', (e) => e.preventDefault(), { passive: false });
       document.addEventListener('gestureend', (e) => e.preventDefault(), { passive: false });
 
-      // Prevent double-tap zoom
+      // Prevent double-tap zoom (but allow taps on controls)
       let lastTouchEnd = 0;
       document.addEventListener('touchend', (e) => {
+        if (inControls(e)) return;
         const now = Date.now();
         if (now - lastTouchEnd <= 300) e.preventDefault();
         lastTouchEnd = now;
