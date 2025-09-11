@@ -17,6 +17,7 @@ html, body {
   inset: 0;                         /* top/right/bottom/left = 0 */
   width: 100dvw;                    /* dynamic viewport (mobile-safe) */
   height: 100dvh;
+  z-index: 0;
 }
 
 /* Canvas: no borders/outlines/shadows and no touch gestures */
@@ -30,9 +31,6 @@ canvas {
   touch-action: none;               /* disable browser panning/zooming */
 }
 
-/* Optional (extra safety): stop gestures on entire page */
-html, body, #sketch { touch-action: none; }
-
 /* Controls bar (bottom-center overlay) */
 .controls {
   position: fixed;
@@ -42,13 +40,15 @@ html, body, #sketch { touch-action: none; }
   display: inline-flex;
   gap: 12px;
   align-items: center;
-  background: rgba(20, 20, 20, 0.45);  /* subtle, no hard border */
+  background: rgba(20, 20, 20, 0.45);
   backdrop-filter: blur(4px);
   padding: 8px 12px;
   border-radius: 12px;
   color: #fff;
-  z-index: 10;
+  z-index: 10;                      /* above canvas */
   flex-wrap: wrap;
+  touch-action: manipulation;       /* allow taps/drag on slider */
+  pointer-events: auto;             /* ensure interactive on mobile */
 }
 
 /* Button + Slider styling */
