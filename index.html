@@ -7,7 +7,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"
     />
-    <title>Tea Shop Experience</title>
+    <title>Tea Shop Scenes</title>
     <link rel="stylesheet" href="styles.css" />
 
     <!-- p5.js + p5.sound -->
@@ -27,27 +27,10 @@
         <input id="vol" type="range" min="0" max="1" step="0.01" value="0.5" />
         <span id="volVal">0.50</span>
       </label>
-
-      <!-- Restart -->
-      <button id="restart-game" type="button">Restart Game</button>
     </div>
 
-    <!-- Wire up Restart + lock gestures on mobile -->
+    <!-- Lock gestures on mobile -->
     <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        // Restart button
-        const restartBtn = document.getElementById('restart-game');
-        if (restartBtn) {
-          restartBtn.addEventListener('click', () => {
-            if (window.restartGame) {
-              window.restartGame(); // defined in sketch.js
-            } else {
-              location.reload();
-            }
-          });
-        }
-      });
-
       /* Lock the page from moving/zooming on mobile */
       // Prevent touch panning/scrolling
       document.addEventListener('touchmove', (e) => {
