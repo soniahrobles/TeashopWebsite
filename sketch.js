@@ -91,7 +91,26 @@ function setup() {
   layoutDessertBar();
   layoutLobbySketch(true); // true => (re)generate static books
 
-  // Controls
+  // p5 helper: prevent the page from scrolling on touch-drag
+function touchMoved() { return false; }
+
+// iOS Safari: block pinch zoom & rubber-band scrolling
+document.addEventListener('touchmove', (e) => {
+  e.preventDefault();
+}, { passive: false });
+
+document.addEventListener('gesturestart', (e) => e.preventDefault(), { passive: false });
+document.addEventListener('gesturechange', (e) => e.preventDefault(), { passive: false });
+document.addEventListener('gestureend', (e) => e.preventDefault(), { passive: false });
+
+// (Optional) block double-tap zoom
+let lastTouchEnd = 0;
+document.addEventListener('touchend', (e) => {
+  const now = Date.now();
+  if (now - lastTouchEnd <= 300) e.preventDefault();
+  lastTouchEnd = now;
+}, { passive: false });
+// Controls
   const btn = document.getElementById("toggle-sound");
   const vol = document.getElementById("vol");
   const volVal = document.getElementById("volVal");
