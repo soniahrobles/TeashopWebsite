@@ -1,21 +1,25 @@
-/* Full-bleed page */
+/* Reset / base */
+* { box-sizing: border-box; }
+
 html, body {
   margin: 0;
   padding: 0;
   height: 100%;
-  overflow: hidden;           /* prevents scrollbars that look like borders */
-  background: #000;           /* match scene edge */
+  overflow: hidden;                 /* no scrolling */
+  overscroll-behavior: none;        /* no rubber-band */
+  background: #000;                 /* match scene edge */
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
 }
 
 /* Canvas container fills the viewport */
 #sketch {
-  position: fixed;            /* pin to viewport */
-  inset: 0;                   /* top/right/bottom/left = 0 */
-  width: 100dvw;              /* dynamic viewport to avoid mobile gaps */
+  position: fixed;                  /* pin to viewport */
+  inset: 0;                         /* top/right/bottom/left = 0 */
+  width: 100dvw;                    /* dynamic viewport (mobile-safe) */
   height: 100dvh;
 }
 
-/* Canvas: no borders/outlines, no shadows */
+/* Canvas: no borders/outlines/shadows and no touch gestures */
 canvas {
   display: block;
   width: 100%;
@@ -23,34 +27,60 @@ canvas {
   border: none !important;
   outline: none !important;
   box-shadow: none !important;
+  touch-action: none;               /* disable browser panning/zooming */
 }
 
-/* Controls at bottom-center */
+/* Optional (extra safety): stop gestures on entire page */
+html, body, #sketch { touch-action: none; }
+
+/* Controls bar (bottom-center overlay) */
 .controls {
   position: fixed;
   left: 50%;
-  bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+  bottom: calc(16px + env(safe-area-inset-bottom, 0px));
   transform: translateX(-50%);
   display: inline-flex;
   gap: 12px;
   align-items: center;
-  background: rgba(20, 20, 20, 0.45);
-  color: #fff;
-  padding: 8px 12px;
-  border-radius: 10px;
+  background: rgba(20, 20, 20, 0.45);  /* subtle, no hard border */
   backdrop-filter: blur(4px);
+  padding: 8px 12px;
+  border-radius: 12px;
+  color: #fff;
   z-index: 10;
   flex-wrap: wrap;
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
+
+/* Button + Slider styling */
+.controls button {
+  appearance: none;
+  background: transparent;
+  color: #fff;
+  border: 1.5px solid rgba(255,255,255,0.7);
+  border-radius: 8px;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+.controls button:hover { border-color: #fff; }
 
 .controls label {
   display: inline-flex;
-  gap: 6px;
   align-items: center;
+  gap: 8px;
+  font-weight: 500;
   font-size: 14px;
 }
 
 .controls input[type="range"] {
-  width: 140px;
+  width: 160px;
+  accent-color: #fff;
 }
+
+.controls span {
+  min-width: 3ch;
+  text-align: right;
+}
+
+/* Remove tap highlight / outlines on focus (visual polish) */
+button:focus, input:focus { outline: none; }
+* { -webkit-tap-highlight-color: transparent; }
