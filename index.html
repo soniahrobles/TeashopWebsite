@@ -2,8 +2,12 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Tea Shop Experience</title>
+    <!-- Lock zoom/pan and fit notches on mobile -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"
+    />
+    <title>Tea Shop Scenes</title>
     <link rel="stylesheet" href="styles.css" />
 
     <!-- p5.js + p5.sound -->
@@ -15,16 +19,53 @@
   <body>
     <div id="sketch"></div>
 
-    <!-- Controls (moved to bottom-center) -->
+    <!-- Controls (bottom-center) -->
     <div class="controls">
       <button id="toggle-sound" type="button">Play / Pause Music</button>
 
       <label>Volume:
         <input id="vol" type="range" min="0" max="1" step="0.01" value="0.5" />
-        <span id="volVal">1.0</span>
+        <span id="volVal">0.50</span>
       </label>
 
-    
+      <!-- Restart -->
+      <button id="restart-game" type="button">Restart Game</button>
     </div>
+
+    <!-- Wire up Restart + lock gestures on mobile -->
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        // Restart button
+        const restartBtn = document.getElementById('restart-game');
+        if (restartBtn) {
+          restartBtn.addEventListener('click', () => {
+            if (window.restartGame) {
+              window.restartGame(); // defined in sketch.js
+            } else {
+              location.reload();
+            }
+          });
+        }
+      });
+
+      /* Lock the page from moving/zooming on mobile */
+      // Prevent touch panning/scrolling
+      document.addEventListener('touchmove', (e) => {
+        e.preventDefault();
+      }, { passive: false });
+
+      // Prevent pinch zoom
+      document.addEventListener('gesturestart', (e) => e.preventDefault(), { passive: false });
+      document.addEventListener('gesturechange', (e) => e.preventDefault(), { passive: false });
+      document.addEventListener('gestureend', (e) => e.preventDefault(), { passive: false });
+
+      // Prevent double-tap zoom
+      let lastTouchEnd = 0;
+      document.addEventListener('touchend', (e) => {
+        const now = Date.now();
+        if (now - lastTouchEnd <= 300) e.preventDefault();
+        lastTouchEnd = now;
+      }, { passive: false });
+    </script>
   </body>
 </html>
