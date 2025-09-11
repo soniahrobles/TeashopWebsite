@@ -1,20 +1,56 @@
+/* Full-bleed page */
 html, body {
-  .controls {
-display: inline-flex;
-gap: 12px;
-align-items: center;
-background:(transparent);
-padding: 8px 12px;
-border-radius: 8px;
-backdrop-filter: blur(4px);
-margin: 8px auto 20px;
-flex-wrap: wrap;
-}
   margin: 0;
   padding: 0;
+  height: 100%;
+  overflow: hidden;           /* prevents scrollbars that look like borders */
+  background: #000;           /* match scene edge */
 }
+
+/* Canvas container fills the viewport */
+#sketch {
+  position: fixed;            /* pin to viewport */
+  inset: 0;                   /* top/right/bottom/left = 0 */
+  width: 100dvw;              /* dynamic viewport to avoid mobile gaps */
+  height: 100dvh;
+}
+
+/* Canvas: no borders/outlines, no shadows */
 canvas {
   display: block;
-  border: none;     
-  outline: none;
+  width: 100%;
+  height: 100%;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Controls at bottom-center */
+.controls {
+  position: fixed;
+  left: 50%;
+  bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+  transform: translateX(-50%);
+  display: inline-flex;
+  gap: 12px;
+  align-items: center;
+  background: rgba(20, 20, 20, 0.45);
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 10px;
+  backdrop-filter: blur(4px);
+  z-index: 10;
+  flex-wrap: wrap;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+.controls label {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  font-size: 14px;
+}
+
+.controls input[type="range"] {
+  width: 140px;
 }
